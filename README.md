@@ -12,6 +12,8 @@
 A variable fisheye and defish warp for [Resolume](https://resolume.com) Arena and
 Avenue, as an FFGL effect.
 
+**Video:** [What it does, in 45 seconds](https://www.youtube.com/watch?v=BJjHqfk8XB8)
+
 ![Equidistant fisheye on the geometry card](docs/hero.jpg)
 
 <sub>The repo's geometry test card through the default lens. The grid shows the
