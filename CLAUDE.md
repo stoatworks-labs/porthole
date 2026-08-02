@@ -13,6 +13,8 @@ Read `AGENTS.md` before changing the projection maths.
 - Install to Resolume: `cmake --install build`
 - Render a frame offline: `./build/phtest --out /tmp/frame.png`
 - List parameters: `./build/phtest --list`
+- Put real footage through the real shader (for the project video):
+  `ffmpeg … -f rawvideo -pix_fmt rgba - | ./build/phtest --pipe --width W --height H [--script cues.txt] | ffmpeg …`
 
 ## Verify
 - Everything: `tools/verify.sh`
