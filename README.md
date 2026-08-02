@@ -6,8 +6,9 @@
 > a headless GL context: the GLSL is measured against an independent C++
 > implementation across 120 parameter combinations, and the defish is confirmed
 > to invert the fish to within 0.001 of an 8-bit level (see [Status](#status)).
-> It has **never been loaded into Resolume** — only compiled, rendered and
-> measured offline. Check it in your own rig before trusting it in a show.
+> It **has since been run inside Resolume on real content**; Windows binaries are
+> built and shipped in the release, but the plugin has only been exercised in
+> Resolume on macOS. Check it in your own rig before trusting it in a show.
 
 A variable fisheye and defish warp for [Resolume](https://resolume.com) Arena and
 Avenue, as an FFGL effect.
@@ -154,8 +155,8 @@ a matter of taste. `tools/verify.sh` runs the lot.
 | **Fish → defish round trip**, 64 combinations | **0.001 levels** mean error at moderate settings; 16 of the 64 are too extreme to judge and say so rather than claiming a pass |
 | **Dead-control sweep** | all 10 parameters measurably affect the output |
 | **Universal binary** | `x86_64 arm64`, exports `plugMain` |
-| **Loaded in Resolume** | **no — never once** |
-| **Windows build** | never compiled |
+| **Loaded in Resolume** | **yes** — run on real content, on macOS |
+| **Windows build** | compiled and shipped in the release; not yet exercised in Resolume |
 | **Performance** | never measured |
 
 The lens maths deliberately exists twice — in C++ for readability and testing,
