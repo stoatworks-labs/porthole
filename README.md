@@ -53,6 +53,36 @@ There is deliberately **no wet/dry mix**. Cross-fading two different geometries
 double-exposes the picture rather than easing between them. The null is Field of
 View at zero, where every projection agrees anyway.
 
+<!-- downloads:start -->
+
+## Download
+
+**[v0.1.0](https://github.com/stoatworks-labs/porthole/releases/tag/v0.1.0)** — prebuilt for macOS and Windows. Pick your platform:
+
+<details>
+<summary><b>macOS</b> — Universal (Apple Silicon + Intel)</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| Universal (Apple Silicon + Intel) · .dmg disk image | [`porthole-0.1.0-macos-universal.dmg`](https://github.com/stoatworks-labs/porthole/releases/download/v0.1.0/porthole-0.1.0-macos-universal.dmg) | 173 KB |
+| Universal (Apple Silicon + Intel) · .zip archive | [`porthole-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-macos-universal.zip) | 135 KB |
+
+</details>
+
+<details>
+<summary><b>Windows</b> — x64</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| x64 · .exe installer | [`porthole-0.1.0-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/porthole/releases/download/v0.1.0/porthole-0.1.0-windows-x86_64-setup.exe) | 206 KB |
+| x64 · .zip archive | [`porthole-windows-x86_64.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-windows-x86_64.zip) | 97 KB |
+
+</details>
+
+All builds, checksums and release notes: [github.com/stoatworks-labs/porthole/releases](https://github.com/stoatworks-labs/porthole/releases).
+
+<!-- downloads:end -->
+
 ## Controls
 
 **Lens**
