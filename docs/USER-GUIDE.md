@@ -99,6 +99,24 @@ to animate if you want the effect to come and go.
 
 ---
 
+## Audio reactivity
+
+Resolume can drive any of these sliders from its own audio analysis: click the dropdown beside
+a parameter, choose **FFT**, and pick a band and gain. No plugin setting is involved.
+
+Porthole's controls happen to be the classic pump targets:
+
+- **Field of View** on the low band is the whole "lens breathes with the kick" move — and
+  because zero is the null, the picture *relaxes to undistorted* between hits rather than
+  sitting in some second geometry.
+- **Chromatic** on hits gives the fringing snap that usually takes a separate effect.
+- **Zoom** on overall level, kept subtle, adds the push a camera operator would.
+
+Leave **Projection** alone: it is a dropdown, and audio-driving it cuts between lenses rather
+than warping one.
+
+---
+
 ## Troubleshooting
 
 | Symptom | Cause |
