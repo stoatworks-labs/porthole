@@ -57,6 +57,23 @@ View at zero, where every projection agrees anyway.
 
 <!-- downloads:start -->
 
+## Try it in your browser
+
+**<https://porthole-demo.stoatworks-labs.com>**
+
+Not the plugin — the GLSL from `source/Shaders.cpp`, copied across unedited and run in
+WebGL2 over clips generated in the page, with the parameters this plugin's
+constructor declares and the conversions its own code applies. No install, and
+nothing you load leaves your machine.
+
+Two of the claims below are checkable there in a few seconds: set Projection to rectilinear and the picture is untouched at any field of view, and turning Defish on with nothing else changed puts a fisheye back flat.
+
+It is a port, so it is not evidence about the plugin: a browser is not Resolume,
+GLSL ES 3.00 is not desktop GL 4.1 core, and nothing on that page measures
+anything. The page says all of that itself, in a disclosure at the foot. The
+numbers worth trusting are in [Status](#status) and come from the offline
+harness in this repository.
+
 ## Download
 
 **[v0.1.0](https://github.com/stoatworks-labs/porthole/releases/tag/v0.1.0)** — prebuilt for macOS and Windows. Pick your platform:
