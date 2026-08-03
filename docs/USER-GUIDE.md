@@ -42,6 +42,17 @@ On macOS the build is unsigned, so Gatekeeper may quarantine it:
 xattr -dr com.apple.quarantine ~/Documents/Resolume\ Arena/Extra\ Effects/Porthole.bundle
 ```
 
+### OpenFX hosts (Resolve, Vegas, Nuke, Natron)
+
+Porthole also ships as an OpenFX plugin — same effect, same controls. Copy
+`Porthole.ofx.bundle` from the `-ofx-` download into the OpenFX folder and
+restart the host:
+
+```
+macOS    /Library/OFX/Plugins/
+Windows  C:\Program Files\Common Files\OFX\Plugins\
+```
+
 ---
 
 ## Projection is *which lens*, not how much

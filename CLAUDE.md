@@ -16,6 +16,17 @@ Read `AGENTS.md` before changing the projection maths.
 - Put real footage through the real shader (for the project video):
   `ffmpeg … -f rawvideo -pix_fmt rgba - | ./build/phtest --pipe --width W --height H [--script cues.txt] | ffmpeg …`
 
+## OpenFX build
+- `source/ofx/PortholeOFX.cpp` → `build/Porthole.ofx.bundle` (target `PortholeOFX`,
+  `-DBUILD_OFX=OFF` to skip) for Resolve/Nuke/Natron/Vegas. It links
+  `Projection.cpp` directly — the lens maths still has one home — but mirrors the
+  fragment shader's pixel machinery (edge modes, supersample grid, chromatic
+  triple) on the CPU. Change the shader's pixel machinery, change this too.
+- OFX SDK subset (BSD-3) vendored under `external/openfx`.
+- Smoke test: `../resolume-ofx-bridge/build/ofxprobe --dir build --render com.stoatworks.porthole`
+- Identity proof: add `--set projection=0 --set chromatic=0 --set quality=0` → 0 bytes differ.
+- Install for Resolve: copy the bundle into `/Library/OFX/Plugins`.
+
 ## Verify
 - Everything: `tools/verify.sh`
 - GLSL vs C++ maths: `./build/phtest --probe`

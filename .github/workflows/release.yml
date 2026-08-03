@@ -71,6 +71,19 @@ jobs:
           else
             cp "build/Release/Porthole.dll" "out/Porthole.dll"
           fi
+          # OpenFX build: shipped as its own zip, not folded into the FFGL
+          # artefact — it installs to the OFX folder, not Resolume's.
+          mkdir -p ofxout
+          if [ "${{ runner.os }}" = "macOS" ]; then
+            cp -R "build/Porthole.ofx.bundle" "ofxout/Porthole.ofx.bundle"
+            lipo -archs "ofxout/Porthole.ofx.bundle/Contents/MacOS/Porthole.ofx"
+            nm -gU "ofxout/Porthole.ofx.bundle/Contents/MacOS/Porthole.ofx" | grep -q "_OfxGetPlugin"
+            codesign --force --sign - --timestamp=none "ofxout/Porthole.ofx.bundle"
+          else
+            mkdir -p "ofxout/Porthole.ofx.bundle/Contents/Win64"
+            cp "build/Porthole.ofx.bundle/Contents/Win64/Porthole.ofx" "ofxout/Porthole.ofx.bundle/Contents/Win64/Porthole.ofx"
+          fi
+          ls -R ofxout
           ls -R out
 
       - name: Archive (zip)
@@ -81,6 +94,12 @@ jobs:
             7z a "../porthole-${{ matrix.name }}.zip" ./*
           else
             zip -r "../porthole-${{ matrix.name }}.zip" ./*
+          fi
+          cd ../ofxout
+          if command -v 7z >/dev/null 2>&1; then
+            7z a "../porthole-ofx-${{ matrix.name }}.zip" ./*
+          else
+            zip -r "../porthole-ofx-${{ matrix.name }}.zip" ./*
           fi
 
       - name: Disk image (macOS)

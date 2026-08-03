@@ -102,6 +102,21 @@ All builds, checksums and release notes: [github.com/stoatworks-labs/porthole/re
 
 <!-- downloads:end -->
 
+## OpenFX — Resolve, Vegas, Nuke, Natron
+
+The same effect also builds as an OpenFX plugin, so it runs in DaVinci Resolve
+(Edit and Color pages, and Fusion), Vegas Pro, Nuke and Natron. It is
+the identical lens family — the OpenFX build links the same Projection.cpp the probe measures the shader against.
+
+Grab the `porthole-ofx-*` zip for your platform from the release and copy
+`Porthole.ofx.bundle` into the standard OpenFX folder, then restart the host:
+
+```
+macOS    /Library/OFX/Plugins/
+Windows  C:\Program Files\Common Files\OFX\Plugins\
+```
+
+
 ## Controls
 
 **Lens**
