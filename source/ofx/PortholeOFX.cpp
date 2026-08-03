@@ -17,6 +17,7 @@
 #include "ofxsImageEffect.h"
 #include "ofxsProcessing.h"
 
+#include "../Presets.h"
 #include "../Projection.h"
 
 namespace
@@ -33,6 +34,7 @@ constexpr const char* kPluginDescription =
 	"lengths, not an added fringe.\n\n"
 	"https://stoatworks-labs.com";
 
+constexpr const char* kParamPreset     = "preset";
 constexpr const char* kParamProjection = "projection";
 constexpr const char* kParamFov        = "fieldOfView";
 constexpr const char* kParamDefish     = "defish";
@@ -361,6 +363,7 @@ public:
 	{
 		dstClip    = fetchClip( kOfxImageEffectOutputClipName );
 		srcClip    = fetchClip( kOfxImageEffectSimpleSourceClipName );
+		preset     = fetchChoiceParam( kParamPreset );
 		projection = fetchDoubleParam( kParamProjection );
 		fov        = fetchDoubleParam( kParamFov );
 		defish     = fetchBooleanParam( kParamDefish );
@@ -410,6 +413,64 @@ public:
 		}
 	}
 
+	void changedParam( const OFX::InstanceChangedArgs& args, const std::string& paramName ) override
+	{
+		using namespace porthole::presets;
+
+		if( paramName == kParamPreset )
+		{
+			int chosen = 0;
+			preset->getValue( chosen );
+			if( chosen <= 0 || chosen > kCount || applyingPreset )
+				return;
+
+			// The copy IS the preset — same table as the FFGL build, same 0..1
+			// space. One edit block so undo takes the whole preset back at once.
+			const Preset& p = kPresets[ chosen - 1 ];
+			applyingPreset  = true;
+			beginEditBlock( "Preset" );
+			setIfChanged( projection, p.v[ kProjection ] );
+			setIfChanged( fov, p.v[ kFieldOfView ] );
+			setIfChanged( defish, p.v[ kDefish ] );
+			setIfChanged( chromatic, p.v[ kChromatic ] );
+			setIfChanged( fit, p.v[ kFit ] );
+			setIfChanged( zoom, p.v[ kZoom ] );
+			setIfChanged( edges, p.v[ kEdges ] );
+			endEditBlock();
+			applyingPreset = false;
+			return;
+		}
+
+		// Editing a covered control while a preset is active hands control back
+		// to the sliders. Judged by value, not by the change reason: hosts are
+		// not consistent about reasons, but "still equal to the preset" is
+		// unambiguous and also absorbs the host echoing our own setValues.
+		if( applyingPreset || args.reason == OFX::eChangeTime )
+			return;
+
+		int active = 0;
+		preset->getValue( active );
+		if( active <= 0 || active > kCount )
+			return;
+
+		const Preset& p = kPresets[ active - 1 ];
+		const bool covered =
+			( paramName == kParamProjection && differs( projection, p.v[ kProjection ] ) ) ||
+			( paramName == kParamFov && differs( fov, p.v[ kFieldOfView ] ) ) ||
+			( paramName == kParamDefish && differs( defish, p.v[ kDefish ] ) ) ||
+			( paramName == kParamChromatic && differs( chromatic, p.v[ kChromatic ] ) ) ||
+			( paramName == kParamFit && differs( fit, p.v[ kFit ] ) ) ||
+			( paramName == kParamZoom && differs( zoom, p.v[ kZoom ] ) ) ||
+			( paramName == kParamEdges && differs( edges, p.v[ kEdges ] ) );
+
+		if( covered )
+		{
+			applyingPreset = true;
+			preset->setValue( 0 );
+			applyingPreset = false;
+		}
+	}
+
 	bool isIdentity( const OFX::IsIdentityArguments& args, OFX::Clip*& identityClip, double& identityTime ) override
 	{
 		// Rectilinear through a rectilinear lens is the same picture — the
@@ -427,6 +488,42 @@ public:
 	}
 
 private:
+	// The preset table is plain floats; these give each param type its reading
+	// of one. Option values are element indices, booleans are 0/1.
+	static void setIfChanged( OFX::DoubleParam* p, float v )
+	{
+		if( differs( p, v ) )
+			p->setValue( double( v ) );
+	}
+	static void setIfChanged( OFX::BooleanParam* p, float v )
+	{
+		if( differs( p, v ) )
+			p->setValue( v > 0.5f );
+	}
+	static void setIfChanged( OFX::ChoiceParam* p, float v )
+	{
+		if( differs( p, v ) )
+			p->setValue( int( std::lround( v ) ) );
+	}
+	static bool differs( OFX::DoubleParam* p, float v )
+	{
+		double current = 0.0;
+		p->getValue( current );
+		return std::fabs( current - double( v ) ) > 1e-4;
+	}
+	static bool differs( OFX::BooleanParam* p, float v )
+	{
+		bool current = false;
+		p->getValue( current );
+		return current != ( v > 0.5f );
+	}
+	static bool differs( OFX::ChoiceParam* p, float v )
+	{
+		int current = 0;
+		p->getValue( current );
+		return current != int( std::lround( v ) );
+	}
+
 	WarpSettings settingsAtTime( double t ) const
 	{
 		WarpSettings w;
@@ -462,6 +559,7 @@ private:
 
 	OFX::Clip* dstClip           = nullptr;
 	OFX::Clip* srcClip           = nullptr;
+	OFX::ChoiceParam* preset     = nullptr;
 	OFX::DoubleParam* projection = nullptr;
 	OFX::DoubleParam* fov        = nullptr;
 	OFX::BooleanParam* defish    = nullptr;
@@ -472,6 +570,10 @@ private:
 	OFX::DoubleParam* zoom       = nullptr;
 	OFX::ChoiceParam* edges      = nullptr;
 	OFX::ChoiceParam* quality    = nullptr;
+
+	/// True while our own setValues are in flight, so the resulting
+	/// changedParam callbacks are not mistaken for the operator editing.
+	bool applyingPreset = false;
 };
 
 OFX::DoubleParamDescriptor* defineSlider( OFX::ImageEffectDescriptor& desc, OFX::PageParamDescriptor* page,
@@ -527,6 +629,21 @@ void PortholePluginFactory::describeInContext( OFX::ImageEffectDescriptor& desc,
 	// Same parameters, same 0..1 ranges, same defaults as the FFGL build, so
 	// the two inspectors read identically and the docs cover both.
 	OFX::PageParamDescriptor* page = desc.definePageParam( "Controls" );
+
+	// Factory presets, from the same table the FFGL build reads (Presets.h).
+	// Custom is not a preset: it means the sliders are the truth.
+	OFX::ChoiceParamDescriptor* presetParam = desc.defineChoiceParam( kParamPreset );
+	presetParam->setLabels( "Preset", "Preset", "Preset" );
+	presetParam->setHint( "Factory lens setups. Picking one sets the look controls; "
+	                      "editing any of them afterwards falls back to Custom." );
+	presetParam->appendOption( "Custom" );
+	for( int i = 0; i < porthole::presets::kCount; ++i )
+		presetParam->appendOption( porthole::presets::kPresets[ i ].name );
+	presetParam->setDefault( 0 );
+	presetParam->setIsPersistant( true );
+	presetParam->setEvaluateOnChange( false );//the copied values re-render; the label itself does not
+	presetParam->setAnimates( false );
+	page->addChild( *presetParam );
 
 	OFX::GroupParamDescriptor* lens = desc.defineGroupParam( "Lens" );
 	lens->setLabels( "Lens", "Lens", "Lens" );

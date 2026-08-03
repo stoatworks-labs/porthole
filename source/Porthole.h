@@ -2,6 +2,7 @@
 
 #include <FFGLSDK.h>
 
+#include "Presets.h"
 #include "StoatworksAboutParams.h"
 
 /**
@@ -81,11 +82,26 @@ private:
 		PT_EDGES,
 		PT_QUALITY,
 
+		//Preset. Declared after the real controls so their IDs — which a saved
+		//composition refers to — do not shift under existing users.
+		PT_PRESET,
+
 		//About. FFGL has no window, so the name, the version and the links are
 		//parameters the host draws. See StoatworksAboutParams.h.
 		PT_ABOUT_FIRST,
 		PT_COUNT = PT_ABOUT_FIRST + stoatworks::about::kParamCount
 	};
+
+	/// The ParamID each presets::Param drives, in presets::Param order. The
+	/// preset table stays host-agnostic; this is the FFGL binding of it.
+	static constexpr unsigned int kPresetParamIDs[ porthole::presets::kParamCount ] = {
+		PT_PROJECTION, PT_FIELD_OF_VIEW, PT_DEFISH, PT_CHROMATIC,
+		PT_FIT, PT_ZOOM, PT_EDGES
+	};
+
+	/// Copy a factory preset's values into params[] and raise value events so
+	/// the host re-reads the sliders. `presetIndex` is 1-based; 0 is Custom.
+	void applyPreset( int presetIndex );
 
 	ffglex::FFGLShader shader;
 	ffglex::FFGLScreenQuad quad;
