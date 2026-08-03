@@ -58,6 +58,7 @@ public:
 	FFResult SetFloatParameter( unsigned int index, float value ) override;
 	float GetFloatParameter( unsigned int index ) override;
 	char* GetTextParameter( unsigned int index ) override;
+	FFResult SetTextParameter( unsigned int index, const char* value ) override;
 
 private:
 	/// The order the host shows them in: what the lens is, how the frame is
