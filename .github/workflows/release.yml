@@ -77,7 +77,7 @@ jobs:
           if [ "${{ runner.os }}" = "macOS" ]; then
             cp -R "build/Porthole.ofx.bundle" "ofxout/Porthole.ofx.bundle"
             lipo -archs "ofxout/Porthole.ofx.bundle/Contents/MacOS/Porthole.ofx"
-            nm -gU "ofxout/Porthole.ofx.bundle/Contents/MacOS/Porthole.ofx" | grep -q "_OfxGetPlugin"
+            nm -gU "ofxout/Porthole.ofx.bundle/Contents/MacOS/Porthole.ofx" | grep "_OfxGetPlugin" >/dev/null
             codesign --force --sign - --timestamp=none "ofxout/Porthole.ofx.bundle"
           else
             mkdir -p "ofxout/Porthole.ofx.bundle/Contents/Win64"
