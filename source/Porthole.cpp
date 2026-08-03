@@ -82,6 +82,15 @@ Porthole::Porthole()
 	SetParamElementInfo( PT_FIT, 2, "Height", 2.0f );
 	SetParamElementInfo( PT_FIT, 3, "Stretch", 3.0f );
 
+	// The About block. Inline rather than through a helper: SetParamInfo is
+	// protected on CFFGLPlugin, so nothing outside the class can call it.
+	SetParamInfo( PT_ABOUT_FIRST, "About", FF_TYPE_TEXT, "" );
+	{
+		FFUInt32 aboutId = PT_ABOUT_FIRST + 1;
+		for( const auto& b : stoatworks::about::buttons() )
+			SetParamInfo( aboutId++, b.label, FF_TYPE_EVENT, false );
+	}
+
 	SetParamInfof( PT_CENTRE_X, "Centre X", FF_TYPE_STANDARD );
 	SetParamInfof( PT_CENTRE_Y, "Centre Y", FF_TYPE_STANDARD );
 	SetParamInfof( PT_ZOOM, "Zoom", FF_TYPE_STANDARD );
@@ -215,6 +224,11 @@ FFResult Porthole::SetFloatParameter( unsigned int index, float value )
 	if( index >= PT_COUNT )
 		return FF_FAIL;
 
+	// An About button is a press, not a value to keep: it opens a browser and
+	// nothing about the effect changes.
+	if( index >= PT_ABOUT_FIRST )
+		return stoatworks::about::handleParam( index - PT_ABOUT_FIRST, value ) ? FF_SUCCESS : FF_FAIL;
+
 	//Deliberately not logged. A parameter change is not a diagnostic event: the
 	//host already shows the value, and an operator animating a slider would put
 	//a line in the log every frame. This log exists for the shader that will not
@@ -230,4 +244,17 @@ float Porthole::GetFloatParameter( unsigned int index )
 		return 0.0f;
 
 	return params[ index ];
+}
+
+char* Porthole::GetTextParameter( unsigned int index )
+{
+	// The host is handed a bare pointer, so the string is kept as a member
+	// rather than built on the stack here.
+	if( index == PT_ABOUT_FIRST )
+	{
+		aboutText = stoatworks::about::textParam( 0 );
+		return const_cast< char* >( aboutText.c_str() );
+	}
+
+	return CFFGLPlugin::GetTextParameter( index );
 }

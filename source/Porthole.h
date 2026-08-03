@@ -2,6 +2,8 @@
 
 #include <FFGLSDK.h>
 
+#include "StoatworksAboutParams.h"
+
 /**
     Porthole -- a lens projection warp for Resolume.
 
@@ -55,6 +57,7 @@ public:
 
 	FFResult SetFloatParameter( unsigned int index, float value ) override;
 	float GetFloatParameter( unsigned int index ) override;
+	char* GetTextParameter( unsigned int index ) override;
 
 private:
 	/// The order the host shows them in: what the lens is, how the frame is
@@ -77,11 +80,18 @@ private:
 		PT_EDGES,
 		PT_QUALITY,
 
-		PT_COUNT
+		//About. FFGL has no window, so the name, the version and the links are
+		//parameters the host draws. See StoatworksAboutParams.h.
+		PT_ABOUT_FIRST,
+		PT_COUNT = PT_ABOUT_FIRST + stoatworks::about::kParamCount
 	};
 
 	ffglex::FFGLShader shader;
 	ffglex::FFGLScreenQuad quad;
 
 	float params[ PT_COUNT ];
+
+	/// GetTextParameter hands the host a bare pointer, so the string has to
+	/// outlive the call.
+	std::string aboutText;
 };
