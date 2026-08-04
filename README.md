@@ -102,6 +102,8 @@ harness in this repository.
 
 All builds, checksums and release notes: [github.com/stoatworks-labs/porthole/releases](https://github.com/stoatworks-labs/porthole/releases).
 
+The Windows builds are unsigned, so SmartScreen warns once.
+
 <!-- downloads:end -->
 
 ## OpenFX — Resolve, Vegas, Nuke, Natron
