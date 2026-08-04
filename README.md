@@ -213,6 +213,10 @@ That is silent from the host's side, so it is logged:
 ~/Library/Logs/porthole/porthole.<date>.log
 ```
 
+<!-- attributions:start -->
+This project is built on other people's work — see [ATTRIBUTIONS.md](ATTRIBUTIONS.md).
+<!-- attributions:end -->
+
 ## Licence
 
 MIT — see [LICENSE](LICENSE).
