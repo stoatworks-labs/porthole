@@ -122,6 +122,21 @@ endif()
 # + the official C++ Support library, BSD-3 — see external/openfx/LICENSE.md).
 # Links Projection.cpp straight from source: the lens maths has one home.
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# The FxPlug 4 build, for Final Cut Pro and Motion (macOS only, and only where
+# Apple's SDK is installed - it is a login-gated download that cannot be
+# vendored, so this is OFF by default and CI cannot build it).
+# Pattern doc: resolume-luma-keyer/docs/FXPLUG-PORT.md
+# ---------------------------------------------------------------------------
+option(BUILD_FXPLUG "Build the FxPlug plugin for Final Cut Pro and Motion" OFF)
+
+if(BUILD_FXPLUG)
+    if(NOT APPLE)
+        message(FATAL_ERROR "BUILD_FXPLUG is macOS only.")
+    endif()
+    add_subdirectory(fxplug)
+endif()
+
 option(BUILD_OFX "Build the OpenFX plugin" ON)
 
 if(BUILD_OFX)

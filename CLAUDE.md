@@ -27,6 +27,27 @@ Read `AGENTS.md` before changing the projection maths.
 - Identity proof: add `--set projection=0 --set chromatic=0 --set quality=0` → 0 bytes differ.
 - Install for Resolve: copy the bundle into `/Library/OFX/Plugins`.
 
+## Final Cut Pro / Motion build (fxplug/)
+- Apple's FxPlug 4. **The pattern doc is `resolume-luma-keyer/docs/FXPLUG-PORT.md`** —
+  read it before changing anything structural; it holds the fleet UUID registry
+  and the trap list.
+- Needs Apple's SDK at `/Library/Developer/SDKs/FxPlug.sdk` (login-gated, **not
+  redistributable — CI cannot build this**). Off by default:
+  `cmake -B build-fxplug -DBUILD_FXPLUG=ON -DCMAKE_BUILD_TYPE=Release && cmake --build build-fxplug`
+- Sign (**mandatory** — an unsigned FxPlug plugin does not load):
+  `./fxplug/sign.sh "build-fxplug/Stoatworks Porthole.app"`
+- Install: copy the .app to /Applications **and launch it once**. Copying alone
+  does not register the service, and neither reliably does `pluginkit -a`.
+- Host-free render test: `cmake --build build-fxplug --target porthole-tiletest &&
+  ./build-fxplug/fxplug/porthole-tiletest`
+- The warp reads from anywhere in the source, so unlike a per-pixel effect this
+  declares `kFxPropertyKey_NeedsFullBuffer` and `-sourceTileRect:` returns the
+  WHOLE source image. Output pixels are placed by their position in the full
+  image, not in the tile — `testTiledMatchesWhole` is what guards that.
+- The maths is NOT duplicated here: `Projection.cpp` is compiled straight in,
+  the same way the OpenFX build does it. `porthole_core` is deliberately not
+  used — it is an OBJECT library carrying the FFGL SDK and OpenGL with it.
+
 ## Verify
 - Everything: `tools/verify.sh`
 - GLSL vs C++ maths: `./build/phtest --probe`
