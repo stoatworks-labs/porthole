@@ -102,7 +102,7 @@ harness in this repository.
 
 All builds, checksums and release notes: [github.com/stoatworks-labs/porthole/releases](https://github.com/stoatworks-labs/porthole/releases).
 
-The Windows builds are unsigned, so SmartScreen warns once.
+macOS builds are signed and notarised and open normally. The Windows builds are unsigned, so SmartScreen warns once.
 
 <!-- downloads:end -->
 
