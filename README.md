@@ -83,9 +83,9 @@ harness in this repository.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Universal (Apple Silicon + Intel) · .dmg disk image | [`porthole-1.0.0-macos-universal.dmg`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.0/porthole-1.0.0-macos-universal.dmg) | 178 KB |
-| Universal (Apple Silicon + Intel) · .zip archive | [`porthole-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-macos-universal.zip) | 138 KB |
-| Universal (Apple Silicon + Intel) · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`porthole-ofx-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-ofx-macos-universal.zip) | 216 KB |
+| Universal (Apple Silicon + Intel) · .dmg disk image | [`porthole-1.0.0-macos-universal.dmg`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.0/porthole-1.0.0-macos-universal.dmg) | 199 KB |
+| Universal (Apple Silicon + Intel) · .zip archive | [`porthole-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-macos-universal.zip) | 155 KB |
+| Universal (Apple Silicon + Intel) · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`porthole-ofx-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-ofx-macos-universal.zip) | 229 KB |
 
 </details>
 
