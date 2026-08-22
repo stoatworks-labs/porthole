@@ -25,6 +25,15 @@ if [[ ! -x build/phtest ]]; then
 	exit 1
 fi
 
+# The parameter plumbing first: it needs no GPU, it takes a moment, and it is
+# the half an external user actually got stuck on (vertigo issue #2).
+echo "== presets: every factory preset survives every host behaviour"
+if ./build/phtest --presets | tail -1; then
+	:
+else
+	failures+=("presets")
+fi
+
 probe_pass=0; probe_fail=0
 trip_pass=0; trip_fail=0; trip_skip=0
 failures=()

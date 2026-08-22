@@ -238,6 +238,8 @@ FFResult Porthole::SetFloatParameter( unsigned int index, float value )
 	if( index >= PT_COUNT )
 		return FF_FAIL;
 
+	seedHostValues();
+
 	// An About button is a press, not a value to keep: it opens a browser and
 	// nothing about the effect changes.
 	if( index >= PT_ABOUT_FIRST )
@@ -250,6 +252,14 @@ FFResult Porthole::SetFloatParameter( unsigned int index, float value )
 			applyPreset( chosen );
 		return FF_SUCCESS;
 	}
+
+	// The host may be restating a value it still believes in rather than the
+	// operator moving anything. Letting that through would overwrite the
+	// preset's value in params[] AND read as an edit, dropping the dropdown
+	// back to Custom -- which is what made presets look like they could not
+	// be selected at all. See AGENTS.md.
+	if( hostIsRestatingItself( index, value ) )
+		return FF_SUCCESS;
 
 	// A slider moved while a preset is active means the operator has taken
 	// over: the dropdown falls back to Custom. The equality guard matters —
@@ -270,6 +280,13 @@ FFResult Porthole::SetFloatParameter( unsigned int index, float value )
 		{
 			if( id == index )
 			{
+				// Logged, unlike an ordinary parameter change: this one is a
+				// state change an operator can be surprised by, it happens once
+				// rather than per frame, and diagnosing vertigo #2 needed a code
+				// read precisely because nothing said it had happened.
+				porthole::diag::info( "preset dropped to Custom: parameter "
+				            + std::to_string( index ) + " moved to "
+				            + std::to_string( value ) );
 				params[ PT_PRESET ] = 0.0f;
 				RaiseParamEvent( PT_PRESET, FF_EVENT_FLAG_VALUE );
 				break;
@@ -278,6 +295,76 @@ FFResult Porthole::SetFloatParameter( unsigned int index, float value )
 	}
 
 	return FF_SUCCESS;
+}
+
+const unsigned int* Porthole::PresetParamIDsForTest( int& count )
+{
+	count = porthole::presets::kParamCount;
+	return kPresetParamIDs;
+}
+
+float Porthole::presetValue( int presetIndex, unsigned int id ) const
+{
+	if( presetIndex <= 0 || presetIndex > porthole::presets::kCount )
+		return -1.0f;
+
+	const porthole::presets::Preset& preset = porthole::presets::kPresets[ presetIndex - 1 ];
+	for( int j = 0; j < porthole::presets::kParamCount; ++j )
+		if( kPresetParamIDs[ j ] == id )
+			return preset.v[ j ];
+
+	return -1.0f;
+}
+
+void Porthole::seedHostValues()
+{
+	// Seeded on first parameter traffic rather than in the constructor, so the
+	// whole mechanism stays in one place. It has to happen BEFORE applyPreset
+	// can run: seeding afterwards would record the preset's own values as the
+	// host's opening position, and the host's very next restatement would then
+	// look like an edit -- which is the bug this exists to fix, reintroduced.
+	if( hostValuesSeeded )
+		return;
+
+	for( unsigned int i = 0; i < PT_COUNT; ++i )
+		hostValues[ i ] = params[ i ];
+	hostValuesSeeded = true;
+}
+
+bool Porthole::hostIsRestatingItself( unsigned int index, float value )
+{
+	const float lastFromHost = hostValues[ index ];
+	hostValues[ index ]      = value;
+
+	const float fromPreset =
+		presetValue( static_cast< int >( std::lround( params[ PT_PRESET ] ) ), index );
+	if( fromPreset < 0.0f )
+		return false;
+
+	// A quantisation allowance rather than a float epsilon. A host that keeps
+	// its parameters shorter than a float -- or round-trips them through a UI,
+	// a MIDI value or a saved composition -- hands back a number near ours
+	// rather than ours, and 1e-4 read that as an edit.
+	constexpr float kSame = 1e-3f;
+
+	if( std::fabs( value - fromPreset ) <= kSame )
+	{
+		// The host agreeing with the preset. Nothing to write -- and writing it
+		// would actively hurt: a host that quantises hands back a ROUNDED copy
+		// of our own value, params[] would take the rounding, and the existing
+		// "did a covered parameter move?" test below works to a tighter
+		// tolerance than this one and would read that rounding as an edit.
+		return true;
+	}
+
+	if( std::fabs( value - lastFromHost ) > kSame )
+		return false;//neither: the operator has taken over
+
+	// Deliberately not logged. A host that pushes its parameters every frame
+	// would put a line here every frame, and a log that scrolls is a log nobody
+	// reads. The event worth recording is the one below, in the fallback to
+	// Custom, which happens once.
+	return true;
 }
 
 void Porthole::applyPreset( int presetIndex )
