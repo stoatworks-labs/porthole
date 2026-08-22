@@ -36,11 +36,10 @@ browser.
 
 **Needs Resolume Arena or Avenue 7.3.1 or newer.**
 
-On macOS the build is unsigned, so Gatekeeper may quarantine it:
-
-```bash
-xattr -dr com.apple.quarantine ~/Documents/Resolume\ Arena/Extra\ Effects/Porthole.bundle
-```
+The macOS builds are **Developer ID-signed and notarised**, so the bundle simply loads — there is
+nothing to clear and no `xattr` step. The Windows builds are not code-signed, but plugin files are
+not gated the way `.exe` files are, so Resolume loads them normally; only the installer trips
+SmartScreen, once: **More info** → **Run anyway**.
 
 ### OpenFX hosts (Resolve, Vegas, Nuke, Natron)
 
@@ -121,8 +120,8 @@ than warping one.
 
 | Symptom | Cause |
 |---|---|
-| **Plugin doesn't appear in Resolume** | Wrong folder, or Resolume older than 7.3.1. On macOS, also check quarantine. |
-| **macOS: installed but never loads** | Gatekeeper quarantine on the bundle — clear it with `xattr -dr`. |
+| **Plugin doesn't appear in Resolume** | Wrong folder, or Resolume older than 7.3.1. |
+| **macOS: installed but never loads** | The current builds are signed and notarised, but an older download may still be quarantined — and Resolume skips a quarantined plugin silently. `xattr -dr com.apple.quarantine <bundle>`. |
 | **Rectilinear is changing the picture** | It shouldn't, at any field of view. That is a bug worth reporting. |
 | **Corners go transparent when defishing** | Correct and deliberate — that picture does not exist. Composite something behind it. |
 | **I want to fade the effect in** | Animate Field of View to zero rather than looking for a mix control. |
