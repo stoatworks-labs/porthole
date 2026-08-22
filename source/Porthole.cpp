@@ -88,7 +88,7 @@ Porthole::Porthole()
 
 	// The About block. Inline rather than through a helper: SetParamInfo is
 	// protected on CFFGLPlugin, so nothing outside the class can call it.
-	SetParamInfo( PT_ABOUT_FIRST, "About", FF_TYPE_TEXT, "" );
+	SetParamInfo( PT_ABOUT_FIRST, "About", FF_TYPE_TEXT, stoatworks::about::defaultText() );
 	{
 		FFUInt32 aboutId = PT_ABOUT_FIRST + 1;
 		for( const auto& b : stoatworks::about::buttons() )
