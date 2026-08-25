@@ -76,15 +76,15 @@ harness in this repository.
 
 ## Download
 
-**[v1.0.2](https://github.com/stoatworks-labs/porthole/releases/tag/v1.0.2)** — prebuilt for macOS and Windows. Pick your platform:
+**[v1.0.3](https://github.com/stoatworks-labs/porthole/releases/tag/v1.0.3)** — prebuilt for macOS, Windows and Linux. Pick your platform:
 
 <details>
 <summary><b>macOS</b> — Universal (Apple Silicon + Intel)</summary>
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Universal (Apple Silicon + Intel) · .dmg disk image | [`porthole-1.0.2-macos-universal.dmg`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.2/porthole-1.0.2-macos-universal.dmg) | 201 KB |
-| Universal (Apple Silicon + Intel) · .zip archive | [`porthole-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-macos-universal.zip) | 157 KB |
+| Universal (Apple Silicon + Intel) · .dmg disk image | [`porthole-1.0.3-macos-universal.dmg`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.3/porthole-1.0.3-macos-universal.dmg) | 194 KB |
+| Universal (Apple Silicon + Intel) · .zip archive | [`porthole-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-macos-universal.zip) | 159 KB |
 | Universal (Apple Silicon + Intel) · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`porthole-ofx-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-ofx-macos-universal.zip) | 236 KB |
 
 </details>
@@ -94,9 +94,18 @@ harness in this repository.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| x64 · .exe installer | [`porthole-1.0.2-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.2/porthole-1.0.2-windows-x86_64-setup.exe) | 212 KB |
-| x64 · .zip archive | [`porthole-windows-x86_64.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-windows-x86_64.zip) | 103 KB |
+| x64 · .exe installer | [`porthole-1.0.3-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.3/porthole-1.0.3-windows-x86_64-setup.exe) | 213 KB |
+| x64 · .zip archive | [`porthole-windows-x86_64.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-windows-x86_64.zip) | 105 KB |
 | x64 · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`porthole-ofx-windows-x86_64.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-ofx-windows-x86_64.zip) | 67 KB |
+
+</details>
+
+<details>
+<summary><b>Linux</b> — x64</summary>
+
+| Build | Download | Size |
+| --- | --- | --- |
+| x64 · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`porthole-ofx-linux-x86_64.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-ofx-linux-x86_64.zip) | 712 KB |
 
 </details>
 
