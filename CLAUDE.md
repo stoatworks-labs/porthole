@@ -53,6 +53,13 @@ Read `AGENTS.md` before changing the projection maths.
 - GLSL vs C++ maths: `./build/phtest --probe`
 - Defish really inverts: `./build/phtest --roundtrip`
 - No dead controls: `python3 tools/sweep.py`
+- **Before a release**, the shipped Windows artefact in a real Arena:
+  `../plugin-bench/arena/gate.sh porthole` — loads the actual `.dll` on the win-lab
+  VM and checks registration, the control surface the host sees, FFGL's
+  16-char name truncation, and that every control still moves the picture.
+  Takes minutes, needs the VM, and is deliberately NOT in `tools/verify.sh`.
+  Its expectation lives at `plugin-bench/arena/expect/porthole.json`, so a
+  deliberate change to the controls changes that file too.
 
 ## Notes
 - One shader pass, no intermediate buffers. The effect is the GLSL; the C++ is
