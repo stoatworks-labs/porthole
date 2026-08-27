@@ -231,13 +231,14 @@ does not look like a bug, because it produces a large, plausible, and completely
 
 ## 6. What has never been checked
 
-- **It has never been loaded into Resolume.** Not once. Parameter groups, the
-  option dropdowns, Arena's real texture sizes and its premultiplication
-  behaviour are all unconfirmed, and those are exactly what the offline harness
-  cannot tell you about, because it supplies its own textures. `cmake --install`
-  puts the bundle where Arena looks.
-- **The Windows build has never been run**, or compiled — only the workflow that
-  would do it exists.
+- **It has been loaded into Resolume on macOS only**, where it has been run on
+  real content. On Windows it has never been in a host at all, so the parameter
+  groups, the option dropdowns, Arena's real texture sizes and its
+  premultiplication behaviour are unconfirmed on that platform — and those are
+  exactly what the offline harness cannot tell you about, because it supplies its
+  own textures. `cmake --install` puts the bundle where Arena looks.
+- **The Windows build compiles and ships** — the v0.1.0 release carries an
+  installer and a zip — **but has never been run.**
 - **No performance figure has been taken at all.** The supersampling multiplies
   the per-pixel cost by up to 16 and nobody has measured what that costs at 4K.
 - Everything here comes from one M4 Max, never from CI — hosted macOS runners
