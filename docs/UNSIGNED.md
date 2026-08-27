@@ -30,7 +30,7 @@ old right-click-Open workaround never did.
 To confirm it for yourself:
 
 ```sh
-spctl -a -vv -t install "/Applications/<app>.app"
+spctl -a -vv -t install "$HOME/Documents/Resolume Arena/Extra Effects/Porthole.bundle"
 # accepted / source=Notarized Developer ID
 ```
 
