@@ -77,14 +77,14 @@ harness in this repository.
 
 ## Download
 
-**[v1.0.3](https://github.com/stoatworks-labs/porthole/releases/tag/v1.0.3)** — prebuilt for macOS, Windows and Linux. Pick your platform:
+**[v1.0.4](https://github.com/stoatworks-labs/porthole/releases/tag/v1.0.4)** — prebuilt for macOS, Windows and Linux. Pick your platform:
 
 <details>
 <summary><b>macOS</b> — Universal (Apple Silicon + Intel)</summary>
 
 | Build | Download | Size |
 | --- | --- | --- |
-| Universal (Apple Silicon + Intel) · .dmg disk image | [`porthole-1.0.3-macos-universal.dmg`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.3/porthole-1.0.3-macos-universal.dmg) | 194 KB |
+| Universal (Apple Silicon + Intel) · .dmg disk image | [`porthole-1.0.4-macos-universal.dmg`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.4/porthole-1.0.4-macos-universal.dmg) | 194 KB |
 | Universal (Apple Silicon + Intel) · .zip archive | [`porthole-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-macos-universal.zip) | 159 KB |
 | Universal (Apple Silicon + Intel) · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`porthole-ofx-macos-universal.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-ofx-macos-universal.zip) | 236 KB |
 
@@ -95,7 +95,7 @@ harness in this repository.
 
 | Build | Download | Size |
 | --- | --- | --- |
-| x64 · .exe installer | [`porthole-1.0.3-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.3/porthole-1.0.3-windows-x86_64-setup.exe) | 213 KB |
+| x64 · .exe installer | [`porthole-1.0.4-windows-x86_64-setup.exe`](https://github.com/stoatworks-labs/porthole/releases/download/v1.0.4/porthole-1.0.4-windows-x86_64-setup.exe) | 213 KB |
 | x64 · .zip archive | [`porthole-windows-x86_64.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-windows-x86_64.zip) | 105 KB |
 | x64 · .zip archive (OpenFX — Resolve, Vegas, Nuke) | [`porthole-ofx-windows-x86_64.zip`](https://github.com/stoatworks-labs/porthole/releases/latest/download/porthole-ofx-windows-x86_64.zip) | 67 KB |
 
