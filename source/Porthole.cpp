@@ -21,7 +21,7 @@ static CFFGLPluginInfo PluginInfo(
 	0,                                             // Plugin major version number
 	1,                                             // Plugin minor version number
 	FF_EFFECT,                                     // Plugin type
-	"Fisheye and defish lens projection warp",     // Plugin description
+	"Fisheye and defish, as a change of lens rather than a bulge.\n\nThis does not draw a bulge. It re-photographs the picture through a different lens: every output pixel stands for a ray at some angle off the axis, the lens model says where that ray lands, and the picture is resampled accordingly.\n\nThere is no displacement curve and no polynomial fitted to look about right. Projection is the exponent of a family containing every named lens projection there is, so each position on it is a real optic rather than a point on a fade between two looks.\n\nRectilinear does nothing at all, which is correct, not a special case.\n\nStart from a Preset, at the bottom.",// Plugin description
 	"Porthole FFGL effect"                         // About
 );
 
