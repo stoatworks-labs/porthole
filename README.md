@@ -2,16 +2,16 @@
 
 > **AI-assisted project.** This codebase was created with [Claude](https://claude.com/claude-code)
 > (Anthropic), directed and reviewed by a human author. The projection maths is
-> verified numerically by an offline harness that drives the real plugin class in
-> a headless GL context: the GLSL is measured against an independent C++
-> implementation across 120 parameter combinations, and the defish is confirmed
-> to invert the fish to within 0.001 of an 8-bit level (see [Status](#status)).
-> It **has since been run inside Resolume on real content**; Windows binaries are
-> built and shipped in the release, but the plugin has only been exercised in
-> Resolume on macOS. Check it in your own rig before trusting it in a show.
+> checked numerically by an offline harness that drives the real plugin class in a
+> headless GL context: the GLSL is measured against an independent C++ implementation
+> across 120 parameter combinations, and the defish inverts the fish to within 0.001 of
+> an 8-bit level (see [Status](#status)). It's **since been run inside Resolume on real
+> content**. Windows binaries are built and shipped in the release, but I've only used
+> the plugin in Resolume on macOS. Check it in your own rig before you trust it in a show.
 
 A variable fisheye and defish warp for [Resolume](https://resolume.com) Arena and
-Avenue, as an FFGL effect.
+Avenue, as an FFGL effect. Put it on a clip and it looks like it was shot through the
+spyhole in a hotel room door, or turn it round and flatten fisheye footage back out.
 
 **Video:** [What it does, in 45 seconds](https://www.youtube.com/watch?v=BJjHqfk8XB8)
 
@@ -19,16 +19,16 @@ Avenue, as an FFGL effect.
 
 <sub>The repo's geometry test card through the default lens. The grid shows the
 shape of the distortion, the rings confirm the map stays radial, and the frame
-stays full — rendered by `phtest`, the offline harness.</sub>
+stays full. Rendered by `phtest`, the offline harness.</sub>
 
-Porthole does not draw a bulge. It **re-photographs the picture through a
+Rather than drawing a bulge, Porthole **re-photographs the picture through a
 different lens**: every output pixel stands for a ray at some angle off the
 optical axis, the lens model says where a ray at that angle lands on the image,
 and the picture is resampled accordingly.
 
-That distinction is the whole point, because it means the Projection control is
-not a strength knob — it is *which lens*. The slider is a single continuous
-family that passes exactly through all five projections that have names:
+That means the Projection control picks *which lens*, rather than how strong the
+effect is. The slider is a single continuous family that passes exactly through all
+five projections that have names:
 
 | | |
 | --- | --- |
@@ -37,7 +37,7 @@ family that passes exactly through all five projections that have names:
 | ![Equidistant](docs/equi.jpg) | ![Orthographic](docs/ortho.jpg) |
 | **Equidistant**, `r = θ` — the classic fisheye | **Orthographic**, `r = sin θ` — the mirror-ball |
 
-Three things follow from modelling it this way rather than fitting a curve that
+Three things fall out of modelling it this way rather than fitting a curve that
 looks about right, and all three are consequences rather than features:
 
 | What you get | Why |
@@ -48,11 +48,11 @@ looks about right, and all three are consequences rather than features:
 
 ![Defish](docs/defish.jpg)
 
-<sub>The same card, defished. Pincushion instead of barrel, and the transparent
-corners are honest: undoing a fisheye genuinely wants picture from beyond the
-frame, and there is none.</sub>
+<sub>The same card, defished. Pincushion instead of barrel. The corners go
+transparent because undoing a fisheye needs picture from beyond the frame, and
+there isn't any.</sub>
 
-There is deliberately **no wet/dry mix**. Cross-fading two different geometries
+There's **no wet/dry mix**, on purpose. Cross-fading two different geometries
 double-exposes the picture rather than easing between them. The null is Field of
 View at zero, where every projection agrees anyway.
 
@@ -60,18 +60,19 @@ View at zero, where every projection agrees anyway.
 
 **<https://porthole-demo.stoatworks-labs.com>**
 
-Not the plugin — the GLSL from `source/Shaders.cpp`, copied across unedited and run in
-WebGL2 over clips generated in the page, with the parameters this plugin's
-constructor declares and the conversions its own code applies. No install, and
-nothing you load leaves your machine.
+It isn't the plugin. It's the GLSL from `source/Shaders.cpp`, copied across unedited and
+run in WebGL2 over clips generated in the page, with the parameters this plugin's
+constructor declares and the conversions its own code applies. There's nothing to
+install, and nothing you load leaves your machine.
 
-Two of the claims below are checkable there in a few seconds: set Projection to rectilinear and the picture is untouched at any field of view, and turning Defish on with nothing else changed puts a fisheye back flat.
+You can check two of the claims below there in a few seconds: set Projection to
+rectilinear and the picture is untouched at any field of view, and turning Defish on with
+nothing else changed puts a fisheye back flat.
 
-It is a port, so it is not evidence about the plugin: a browser is not Resolume,
-GLSL ES 3.00 is not desktop GL 4.1 core, and nothing on that page measures
-anything. The page says all of that itself, in a disclosure at the foot. The
-numbers worth trusting are in [Status](#status) and come from the offline
-harness in this repository.
+It's a port, so it isn't evidence about the plugin: a browser isn't Resolume,
+GLSL ES 3.00 isn't desktop GL 4.1 core, and nothing on that page measures
+anything. The page says so itself, in a disclosure at the foot. The numbers worth
+trusting are in [Status](#status) and come from the offline harness in this repo.
 
 <!-- downloads:start -->
 
@@ -119,8 +120,9 @@ macOS builds are signed and notarised and open normally. The Windows builds are 
 ## OpenFX — Resolve, Vegas, Nuke, Natron
 
 The same effect also builds as an OpenFX plugin, so it runs in DaVinci Resolve
-(Edit and Color pages, and Fusion), Vegas Pro, Nuke and Natron. It is
-the identical lens family — the OpenFX build links the same Projection.cpp the probe measures the shader against.
+(Edit and Color pages, and Fusion), Vegas Pro, Nuke and Natron. It's the identical
+lens family: the OpenFX build links the same Projection.cpp the probe measures the
+shader against.
 
 Grab the `porthole-ofx-*` zip for your platform from the release and copy
 `Porthole.ofx.bundle` into the standard OpenFX folder, then restart the host:
@@ -167,7 +169,7 @@ Build (see below) or take a release, then drop `Porthole.bundle` (macOS) or
 ```
 
 `Avenue` instead of `Arena` for that edition. On macOS `cmake --install build`
-does it for you. The releases are unsigned — see [docs/UNSIGNED.md](docs/UNSIGNED.md).
+does it for you. The releases are unsigned (see [docs/UNSIGNED.md](docs/UNSIGNED.md)).
 
 ## Build
 
@@ -204,20 +206,20 @@ a matter of taste. `tools/verify.sh` runs the lot.
 | **Windows build** | compiled and shipped in the release; not yet exercised in Resolume |
 | **Performance** | never measured |
 
-The lens maths deliberately exists twice — in C++ for readability and testing,
+The lens maths exists twice, on purpose: in C++ for readability and testing, and
 in GLSL because it has to run per pixel. `phtest --probe` feeds in a picture
-whose brightness *is* the normalised radius, so what comes back out states which
-source radius the GPU actually sampled from, and compares it against the C++.
-That is what makes the duplication safe.
+whose brightness *is* the normalised radius, so what comes back out says which
+source radius the GPU actually sampled from, and it compares that against the C++.
+That's what makes having it twice safe.
 
-Both measurements decline to answer where the picture cannot support the
-question — a radius that falls outside the frame, or a region the fish already
-compressed past 2:1 — rather than reporting a failure that is really physics.
+Both measurements decline to answer where the picture can't support the question
+(a radius that falls outside the frame, or a region the fish already compressed
+past 2:1) rather than reporting a failure that's really just physics.
 
 ## Diagnostics
 
-If the effect appears in Resolume but does nothing, the shader did not compile.
-That is silent from the host's side, so it is logged:
+If the effect turns up in Resolume but does nothing, the shader didn't compile.
+The host doesn't say anything about that, so the plugin logs it:
 
 ```
 ~/Library/Logs/porthole/porthole.<date>.log
