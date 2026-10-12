@@ -169,7 +169,8 @@ Build (see below) or take a release, then drop `Porthole.bundle` (macOS) or
 ```
 
 `Avenue` instead of `Arena` for that edition. On macOS `cmake --install build`
-does it for you. The releases are unsigned (see [docs/UNSIGNED.md](docs/UNSIGNED.md)).
+does it for you. The macOS releases are signed and notarised; the Windows ones are
+unsigned (see [docs/UNSIGNED.md](docs/UNSIGNED.md)).
 
 ## Build
 

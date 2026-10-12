@@ -112,8 +112,8 @@ Porthole's controls happen to be the classic pump targets:
 - **Chromatic** on hits gives the fringing snap that usually takes a separate effect.
 - **Zoom** on overall level, kept subtle, adds the push a camera operator would.
 
-Leave **Projection** alone: it's a dropdown, and audio-driving it cuts between lenses rather
-than warping one.
+Leave **Projection** alone: it's a slider, but it picks *which lens*, so audio-driving it
+sweeps between lenses rather than warping one.
 
 ---
 
