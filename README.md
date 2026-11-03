@@ -15,6 +15,8 @@ spyhole in a hotel room door, or turn it round and flatten fisheye footage back 
 
 **Video:** [What it does, in 45 seconds](https://www.youtube.com/watch?v=BJjHqfk8XB8)
 
+The [project page](https://stoatworks-labs.com/software/porthole/) has the downloads, the [user guide](https://stoatworks-labs.com/software/porthole/guide/) and the video.
+
 ![Equidistant fisheye on the geometry card](docs/hero.jpg)
 
 <sub>The repo's geometry test card through the default lens. The grid shows the
